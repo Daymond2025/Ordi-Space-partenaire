@@ -1,5 +1,6 @@
 "use client";
 
+import { ClocheNotifications } from "@/components/notifications/Notifications";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type SVGProps } from "react";
@@ -189,7 +190,7 @@ export function EcranSpace() {
 
   return (
     <div className="flex min-h-full flex-col bg-[#F2F5FA]">
-      <div className="rounded-b-[28px] bg-white pb-6" style={{ boxShadow: "0px 6px 14px rgba(16, 24, 40, 0.06)" }}>
+      <div className="bg-white pb-6">
         <div className="px-[26px] pb-[62px] pt-[24px]" style={{ background: DEGRADE_HEADER, borderRadius: "0 0 30px 30px" }}>
           <div className="flex items-start justify-between gap-3">
             <div className="mt-2 flex min-w-0 items-center gap-3">
@@ -205,7 +206,10 @@ export function EcranSpace() {
                 <p className="truncate text-xl font-extrabold uppercase leading-tight text-white">{nomComplet}</p>
               </div>
             </div>
-            <SelecteurPeriode periode={periode} onChange={setPeriode} />
+            <div className="flex items-center gap-2">
+              <ClocheNotifications className="bg-white/15 text-white" />
+              <SelecteurPeriode periode={periode} onChange={setPeriode} />
+            </div>
           </div>
         </div>
 
@@ -224,6 +228,9 @@ export function EcranSpace() {
           <CarteMontant valeur={stats ? montant(stats.benefice) : tiret} label={"Bénéfice Total\nsur les ventes"} puce="bg-[#E7F8EE] text-[#17A34A]" />
         </div>
       </div>
+
+      {/* Ligne de séparation sur toute la largeur de l'écran. */}
+      <div className="h-px w-full shrink-0 bg-brand-line" />
 
       <div className="flex flex-1 flex-col gap-3 px-4 pb-8 pt-5">
         {erreur ? (
