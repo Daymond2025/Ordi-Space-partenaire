@@ -93,7 +93,7 @@ export function EcranStatistiques() {
 
   return (
     <div className="flex min-h-full flex-col bg-[#f2f5fa]">
-      <div className="rounded-b-[30px] bg-white pb-4" style={{ boxShadow: "0px 6px 14px rgba(16, 24, 40, 0.06)" }}>
+      <div className="bg-white pb-4">
         <div className="bg-gradient-espace shrink-0 rounded-b-[30px] px-4 pb-14 pt-4 text-white">
           <div className="flex items-center gap-3">
             <button
@@ -145,6 +145,9 @@ export function EcranStatistiques() {
 
         <div className="mx-4 mt-5 border-t border-brand-line px-1 pt-3 text-sm text-brand-ink">Produit les plus vendus</div>
       </div>
+
+      {/* Ligne de séparation sur toute la largeur de l'écran. */}
+      <div className="h-px w-full shrink-0 bg-brand-line" />
 
       <div className="mx-4 my-5 rounded-2xl bg-white px-4" style={{ boxShadow: "0px 1px 1px 0px rgba(0, 0, 0, 0.12)" }}>
         {chargement ? (
