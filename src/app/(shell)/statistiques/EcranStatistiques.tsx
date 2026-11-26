@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { apiFetch } from "@/lib/api";
@@ -9,6 +8,7 @@ import { ChevronLeftIcon, MonitorIcon } from "@/components/icons";
 import { SelecteurPeriode } from "@/components/space/SelecteurPeriode";
 import { CarteStatistique } from "@/components/space/CarteStatistique";
 import type { PeriodeEspace, ProduitPlusVendu, StatistiquesPartenaire } from "@/lib/types";
+import { useRetour } from "@/lib/navigation";
 
 function formaterPoint(valeur: number, suffixe: string): string {
   return `${Math.round(valeur).toLocaleString("en-US").replace(/,/g, ".")} ${suffixe}`;
@@ -65,7 +65,8 @@ function LigneProduitVendu({ produit }: { produit: ProduitPlusVendu }) {
  */
 export function EcranStatistiques() {
   const { token } = useAuth();
-  const router = useRouter();
+  // Retour fiable même si la page a été ouverte directement (notification, lien, appli rouverte) — voir lib/navigation.ts.
+  const retour = useRetour("/profil");
   const [periode, setPeriode] = useState<PeriodeEspace>("semaine");
   const [stats, setStats] = useState<StatistiquesPartenaire | null>(null);
   const [chargement, setChargement] = useState(true);
@@ -98,7 +99,7 @@ export function EcranStatistiques() {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              onClick={() => router.back()}
+              onClick={retour}
               aria-label="Retour"
               className="flex h-[31px] w-8 shrink-0 items-center justify-center rounded-[7px]"
               style={{ background: "rgba(255, 255, 255, 0.23)" }}

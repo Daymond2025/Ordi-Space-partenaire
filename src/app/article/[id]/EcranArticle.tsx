@@ -28,6 +28,7 @@ import { VisionneuseImages } from "@/components/catalogue/VisionneuseImages";
 import { FormulaireInformationLivraison, type InfosClient } from "@/components/catalogue/FormulaireInformationLivraison";
 import { RecapitulatifCommande } from "@/components/catalogue/RecapitulatifCommande";
 import { ConfirmationPaiement } from "@/components/catalogue/ConfirmationPaiement";
+import { useRetour } from "@/lib/navigation";
 
 const ONGLETS = [
   { id: "cadeaux", label: "Les cadeaux" },
@@ -58,6 +59,8 @@ function messageErreur(e: unknown): string {
  */
 export function EcranArticle({ produitId }: { produitId: number }) {
   const router = useRouter();
+  // Retour fiable même si la page a été ouverte directement (notification, lien, appli rouverte) — voir lib/navigation.ts.
+  const retour = useRetour("/catalogue");
   const { token } = useAuth();
   const [produit, setProduit] = useState<ProduitCatalogueDetail | null>(null);
   const [introuvable, setIntrouvable] = useState(false);
@@ -226,7 +229,7 @@ export function EcranArticle({ produitId }: { produitId: number }) {
   return (
     <div className="flex h-full flex-col overflow-y-auto bg-[#f2f5fa]">
       <div className="flex shrink-0 items-center justify-between bg-white px-4 py-3">
-        <button type="button" onClick={() => router.back()} aria-label="Retour" className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F2F5FA] text-brand-ink">
+        <button type="button" onClick={retour} aria-label="Retour" className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F2F5FA] text-brand-ink">
           <ChevronLeftIcon className="h-5 w-5" />
         </button>
         <p className="text-base font-extrabold text-brand-ink">Détails</p>

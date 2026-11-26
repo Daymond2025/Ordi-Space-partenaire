@@ -11,6 +11,7 @@ import { CarteCommandeDiscussion } from "@/components/discussion/CarteCommandeDi
 import { BulleMessage } from "@/components/discussion/BulleMessage";
 import { BarreDeSaisie } from "@/components/discussion/BarreDeSaisie";
 import type { ConversationProduit, ItemFil } from "@/lib/types";
+import { useRetour } from "@/lib/navigation";
 
 /**
  * Discussion produit — même écran que l'app Fournisseur
@@ -22,6 +23,8 @@ import type { ConversationProduit, ItemFil } from "@/lib/types";
 export function EcranDiscussionProduit({ produitId }: { produitId: number }) {
   const { user, token } = useAuth();
   const router = useRouter();
+  // Retour fiable même si la page a été ouverte directement (notification, lien, appli rouverte) — voir lib/navigation.ts.
+  const retour = useRetour("/");
   const [conversation, setConversation] = useState<ConversationProduit | null>(null);
   const [chargement, setChargement] = useState(true);
 
@@ -60,7 +63,7 @@ export function EcranDiscussionProduit({ produitId }: { produitId: number }) {
     <div className="flex h-full flex-col">
       <div className="border-b border-brand-line bg-white px-3 py-3">
         <div className="flex items-center gap-3">
-          <button type="button" onClick={() => router.back()} aria-label="Retour" className="flex h-8 w-8 shrink-0 items-center justify-center text-brand-ink">
+          <button type="button" onClick={retour} aria-label="Retour" className="flex h-8 w-8 shrink-0 items-center justify-center text-brand-ink">
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
 

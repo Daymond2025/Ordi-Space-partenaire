@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { apiFetch } from "@/lib/api";
@@ -9,6 +8,7 @@ import { CarteCommandePartenaire } from "@/components/operations/CarteCommandePa
 import { ChevronLeftIcon } from "@/components/icons";
 import { BUCKETS_COMMANDE, type BucketCommande } from "@/lib/statuts";
 import type { CommandeCarte, ProduitActif, ReponseCommandesPartenaire } from "@/lib/types";
+import { useRetour } from "@/lib/navigation";
 
 /**
  * "Centre des commandes" — même écran que l'app Fournisseur
@@ -18,7 +18,8 @@ import type { CommandeCarte, ProduitActif, ReponseCommandesPartenaire } from "@/
  */
 export function EcranCommandes() {
   const { token } = useAuth();
-  const router = useRouter();
+  // Retour fiable même si la page a été ouverte directement (notification, lien, appli rouverte) — voir lib/navigation.ts.
+  const retour = useRetour("/");
 
   const [produits, setProduits] = useState<ProduitActif[] | null>(null);
   const [onglet, setOnglet] = useState<"chat" | "commandes">("chat");
@@ -75,7 +76,7 @@ export function EcranCommandes() {
       <div className="shrink-0 bg-white pb-3">
       <div className="bg-gradient-espace relative rounded-b-[22px] px-4 pb-5 pt-6 text-white">
         <div className="flex min-w-0 items-center gap-3">
-          <button type="button" onClick={() => router.back()} aria-label="Retour" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20">
+          <button type="button" onClick={retour} aria-label="Retour" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/20">
             <ChevronLeftIcon className="h-5 w-5" />
           </button>
           <div className="min-w-0">
